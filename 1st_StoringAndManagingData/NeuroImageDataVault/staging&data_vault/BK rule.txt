@@ -1,0 +1,17 @@
+experiment:	exp1, exp2
+session:		session1, session2,..., session6
+stimulus:		sti1, sti2,..., sti6
+patient:		patient1,..., patient53
+EEG:		eeg1,..., eeg86 (odd for session5, even for session6)
+FNIRS:		fNIRS1, fNIRS5, fNIRS9,..., fNIRS37 (session1);
+		fNIRS2, fNIRS6, fNIRS10,..., fNIRS38 (session2)
+		fNIRS3, fNIRS7, fNIRS11,..., fNIRS39 (session3)
+		fNIRS4, fNIRS8, fNIRS12,..., fNIRS40 (session4)
+		fNIRS41, fNIRS42,..., fNIRS83 (session5)
+		fNIRS84, fNIRS85,..., fNIRS126 (session6)
+
+LinkParticipate:	session#_patient#
+LinkOrganised:	exp#_session#
+LinkTreatment:	session#_sti#
+LinkEEGMeasure:	session#_eeg#
+LinkFNIRSMeasure:	session#_fNIRS#

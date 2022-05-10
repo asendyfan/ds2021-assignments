@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+    <style type='text/css'>
+        tbody tr td{
+            line-height: 48px;
+            border-bottom: 1px solid rgba(1, 1, 1,.2);
+        }
+    </style>
+    <title>{{data.experiment.experimentid}}</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between;height:56px;background-color: #0b76ff; align-items: center;padding: 1rem;">
+        <h1 style="color: white; cursor: pointer;" onclick="window.location.href='/'">Neuro Vault</h1>
+        <div style="color: white;">
+            <span>{{request.session.user_name}}</span>
+            <a href="/logout/" style="color: white;" > Logout</a>
+        </div>
+    </div>
+    <div style="padding:1rem">
+        {% if is_sessions == True %}
+            <a href='/'>neuro vault</a> > <a href='/{{experimentid}}/sessions'>{{experimentid}}</a>
+        {% else %}
+            <a href='/'>neuro vault</a> > <a href='/{{experimentid}}'>{{experimentid}}</a>
+        {% endif %}
+    </div>
+    <div style="padding: .5rem 1rem 0;max-width: 1200px;margin: auto;">
+        <div>    
+            <h1>{{data.experiment.title}}</h1>
+            <div class="card">
+                <div>
+                    <span class="key">Goal: </span>
+                    <span>{{data.experiment.goal}}</span>
+                </div>
+                <div>
+                    <span class="key">TypeByNumberOfSessions: </span>
+                    <span>{{data.experiment.typebynumberofsessions}}</span>
+                </div>
+                <div>
+                    <span class="key">TypeByAllocation: </span>
+                    <span>{{data.experiment.typebyallocation}}</span>
+                </div>
+                <div>
+                    <!-- <span class="key">Patients Number: </span>
+                    <span>{{data.experiment.participantNumber}}</span> -->
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div style="display: flex;align-items: center;margin: 1rem 0 .5rem;border-bottom: 1px solid rgba(0, 0, 0, 0.2);" class="toggle">
+                    <!-- <span class="
+                        {% if is_summary != None %}
+                            bar_active
+                        {% else %}
+                            none
+                        {% endif %}"
+                        style="padding-right: 1rem;" 
+                        onclick="window.location.href='/{{data.experiment.experimentid}}'">
+                        Summary
+                    </span> -->
+                    <span style="padding-right: 1rem;" class="
+                        {% if is_sessions == True %}
+                            bar_active
+                        {% else %}
+                            none
+                        {% endif %}"
+                        onclick="window.location.href='/{{data.experiment.experimentid}}/sessions'"
+                    >Sessions</span>
+                    <!-- <span style="padding-right: 1rem;" class="
+                        {% if is_patients == True %}
+                            bar_active
+                        {% else %}
+                            none
+                        {% endif %}"
+                        onclick="window.location.href='/{{data.experiment.experimentid}}/patients'"
+                    >Patients</span> -->
+                </div>
+                {% if is_summary != None %}
+                    <div style="                        
+                        /* flex-wrap: nowrap; */
+                    " class="imglist">
+                        {% for imgitem in data.results %}
+                        <div>
+                            <div class="key">
+                                <span style="font-size: 1.2rem;">{{imgitem.desc}}</span>
+                            </div>
+                            <img alt={{imgitem.desc}} src={{imgitem.imgurl}}/>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- {% if is_patient != None %}
+                    <table style="width: 100%;">
+                        <thead><tr style="font-size: 1.2rem;line-height: 56px;
+                            background: rgba(0,0,0,.2);">
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Sex</th>
+                            <th>Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in data.results %}
+                            <tr style="line-height: 48px;border-bottom: 1px solid, rgba(1, 1, 1,.1);">
+                                <td>{{item.name}}</td>
+                                <td>{{item.age}}</td>
+                                <td>{{item.sex}}</td>
+                                <td><a href='/{{data.experiment.experimentid}}/patient/{{item.patient_id}}'>More info</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %} -->
+                
+                {% if is_sessions != None %}
+                    <div>
+                        {% for item in sessions %}
+                            <div class='hoverstyle' style="border-bottom: 1px solid rgba(0, 0, 0, .2); align-items: baseline; cursor: pointer;"
+                            onclick="window.location.href='/{{data.experiment.experimentid}}/{{item.sessionid}}'">
+                                <h3 style="line-height:56px !important;padding-right: 1rem;margin-bottom: 0;line-height:unset;">{{item.sessionid}}</h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

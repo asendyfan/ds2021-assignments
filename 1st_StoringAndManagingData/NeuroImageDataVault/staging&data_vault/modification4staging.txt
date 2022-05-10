@@ -1,0 +1,30 @@
+1.
+VMData:
+VM0010_Viso_HBA_Probe1_Deoxy
+VM0010_Viso_HBA_Probe1_Oxy
+VM0010_Viso_HBA_Probe1_Total
+
+set the last 3 columns (BodyMovement, RemovalMark, PreScan)  of expeiment data all to 0, which are NULL originally
+
+
+2. 
+EEG-Data:
+to eliminate repeatition and ensure uniformation of file name:
+
+delete:
+Control009-1
+Control010-1
+
+change file name:
+Control009-1-1   ->   Control009-1
+Control010-1-1   ->   Control010-1
+Control030-1P   ->   Control030-1
+Control030-2P   ->   Control030-2
+
+
+3. In directory 'fNIRS-Data\2daSessionDR':
+move 
+NIRS-2019-10-10_005.nirs 
+in the root path to where it is best to be: 
+'fNIRS-Data\2daSessionDR\Autism0001-2\Detectors'
+(need to create an empty directory 'Detectors' first in path 'fNIRS-Data\2daSessionDR\Autism0001-2\')

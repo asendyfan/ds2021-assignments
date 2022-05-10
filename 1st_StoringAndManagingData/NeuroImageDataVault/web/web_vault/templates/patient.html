@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+    <style>
+    </style>
+    <title>{{data.experiment.id}}patients</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between;height:56px;background-color: #0b76ff; align-items: center;padding: 1rem;">
+        <h1 style="color: white; cursor: pointer;" onclick="window.location.href='/'">Neuro Vault</h1>
+        <div style="color: white;">
+            <span>{{request.session.user_name}}</span>
+            <a href="/logout/" style="color: white;" > Logout</a>
+        </div>
+    </div>
+    <div style="max-width: 1200px;margin: auto;padding: 1rem;">
+        <div >
+            <a href='/'>neuro vault</a> > <a href='/{{experimentid}}'>{{experimentid}}</a>
+            > <a href='/{{experimentid}}/{{sessionid}}'>{{sessionid}}</a> > 
+            <a href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}'>endpoints</a> >
+            <a href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/patient/{{type}}'>{{data.patientname}}</a>
+        </div>
+        <h1 style="margin-top: 1rem;">{{data.patientname}}</h1>
+        <div class="card">
+            <div>
+                <span class="key">Sex: </span>
+                <span>{{data.patientsex}}</span>
+            </div>
+            <div>
+                <span class="key">Age: </span>
+                <span>{{data.patientage}}</span>
+            </div>
+        </div>
+        <h2 style="margin-top: 1rem;">Visualization</h2>
+        <div style="display: flex;align-items: center;margin: 1rem 0 .5rem;border-bottom: 1px solid rgba(0, 0, 0, 0.2);" class="toggle">     
+            {% for typeitem in data.types %}
+                <span class="{% if typeitem == type %} bar_active {% else %} none {% endif %}"
+                    style="padding-right: 1rem;" 
+                    onclick="window.location.href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/patient/{{typeitem}}'">
+                    {{typeitem}}
+                </span>
+            {% endfor%}
+        </div>
+        <img style='width: 100%;' alt={{type}} src='/static/results/patient1/patient1_{{experimentid}}_{{sessionid}}_{{stimulusid}}_{{type}}.png'/>
+        <!-- <div class="imglist">
+            {%for item in data.results %}
+                <div>
+                    <div class="key">
+                        <span style="font-size: 1.2rem;">{{item.desc}}</span>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        </div> -->
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+    <style type='text/css'>
+        .toggle>:nth-child(n){
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.4rem;
+            padding: 0 .5rem;
+        }
+        .toggle>:nth-child(n):hover{
+            background-color: rgba(11, 118, 255, .3);
+            transition: background-color .5s;
+        }
+        .bar_active{
+            background-color: rgba(11, 118, 255, .2);
+        }
+        tbody tr td{
+            line-height: 48px;
+            border-bottom: 1px solid rgba(1, 1, 1,.2);
+        }
+    </style>
+    <!-- <title>{{data.experiment.experimentid}}</title> -->
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between;height:56px;background-color: #0b76ff; align-items: center;padding: 1rem;">
+        <h1 style="color: white; cursor: pointer;" onclick="window.location.href='/'">Neuro Vault</h1>
+        <div style="color: white;">
+            <span>{{request.session.user_name}}</span>
+            <a href="/logout/" style="color: white;" > Logout</a>
+        </div>
+    </div>
+    <div style="padding: 1rem;">
+        <a href='/'>neuro vault</a> > <a href='/{{experimentid}}'>{{experimentid}}</a>
+        > <a href='/{{experimentid}}/{{sessionid}}'>{{sessionid}}</a>
+    </div>
+    <div style="padding:1rem;max-width: 1200px;margin: auto;">
+        <h3 style="padding-top:1rem;">patients number: {{patientsLen}}</h3>
+        <div style="padding-top: .5rem;">
+            <h3>Stimulus</h3>
+        </div>
+        <div style="border-top: 1px solid rgba(0, 0, 0, .3);">
+            {% for item in data %}
+                <div class='hoverstyle' style="border-bottom: 1px solid rgba(0, 0, 0, .2); align-items: baseline; cursor: pointer;"
+                onclick="window.location.href='/{{experimentid}}/{{sessionid}}/{{item.stimulusid}}'">
+                    <h3 style="line-height: 56px !important;padding-right: 1rem;margin-bottom: 0;">{{item.stimuluslevel}}</h3>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+    <style type='text/css'>
+        .toggle>:nth-child(n){
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.4rem;
+            padding: 0 .5rem;
+        }
+        .toggle>:nth-child(n):hover{
+            background-color: rgba(11, 118, 255, .3);
+            transition: background-color .5s;
+        }
+        .bar_active{
+            background-color: rgba(11, 118, 255, .2);
+        }
+        tbody tr td{
+            line-height: 48px;
+            border-bottom: 1px solid rgba(1, 1, 1,.2);
+        }
+    </style>
+    <!-- <title>{{data.experiment.experimentid}}</title> -->
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between;height:56px;background-color: #0b76ff; align-items: center;padding: 1rem;">
+        <h1 style="color: white; cursor: pointer;" onclick="window.location.href='/'">Neuro Vault</h1>
+        <div style="color: white;">
+            <span>{{request.session.user_name}}</span>
+            <a href="/logout/" style="color: white;" > Logout</a>
+        </div>
+    </div>
+    <div style="padding: 1rem;">
+        <a href='/'>neuro vault</a> > <a href='/{{experimentid}}'>{{experimentid}}</a>
+        > <a href='/{{experimentid}}/{{sessionid}}'>{{sessionid}}</a> > <a href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/method_{{endpointmethod}}/type_{{endpointtype}}'>endpoints</a>
+    </div>
+    <div style="padding:1rem;max-width: 1200px;margin: auto;">
+        <div  style="margin-top: 1rem;display: flex;align-items: baseline;justify-content: space-between;">
+            <h3 >Summary</h3>
+            {%if stimulusid == 'sti1'%}<h4><a href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/patient/oxy'>one of the patients analysis..</a></h4>{%endif%}
+        </div>
+        <div style="display: flex;align-items: center;margin: 1rem 0 .5rem;border-bottom: 1px solid rgba(0, 0, 0, 0.2);" class="toggle">     
+            {% for method in methods %}
+                <span class="{% if method == endpointmethod %} bar_active {% else %} none {% endif %}"
+                    style="padding-right: 1rem;" 
+                    onclick="window.location.href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/method_{{method}}/type_{{endpointtype}}'">
+                    {{method}}
+                </span>
+            {% endfor %}
+        </div>
+        {% if typesLen != 0 %}
+            <div style="padding:1rem;display: flex;align-items: center;margin: 1rem 0 .5rem;border-bottom: 1px solid rgba(0, 0, 0, 0.2);" class="toggle">     
+                {% for typeitem in types %}
+                    <span class="{% if typeitem == endpointtype %} bar_active {% else %} none {% endif %}"
+                        style="padding-right: 1rem;" 
+                        onclick="window.location.href='/{{experimentid}}/{{sessionid}}/{{stimulusid}}/method_{{endpointmethod}}/type_{{typeitem}}'">
+                        {{typeitem}}
+                    </span>
+                {% endfor%}
+            </div>
+        {% endif %}
+        <div style="padding:1rem">
+            {%if endpointmethod == 'DownloadFNIRS'%}
+                <div style="display: flex;padding-top: 1rem;">
+                    <button style="padding: 0.5rem 1rem;margin:auto">
+                        <a href="/{{experimentid}}/{{sessionid}}/{{stimulusid}}/download" target="_blank" type="download">Download</a>
+                    </button>
+                </div>
+            {%elif endpointmethod == 'EEG'%}
+                <div>
+                    <h4>one of the endpoints plot</h4>
+                    <img alt='plot' style='width: 100%;' src='/static/results/session_summary/{{sessionid}}/{{sessionid}}.png'/>
+                </div>
+                <!-- <img alt='plot' style='width:100%' src='/static/results/session_summary/{{sessionid}}/mean_{{sessionid}}{{endpointtype}}.png'/> -->
+            {%else%}    
+                <img alt='plot' style='width:100%' src='/static/results/session_summary/{{sessionid}}/mean_{{sessionid}}{{endpointtype}}.png'/>
+            {%endif%}
+        </div>
+    </div>
+</body>
+</html>

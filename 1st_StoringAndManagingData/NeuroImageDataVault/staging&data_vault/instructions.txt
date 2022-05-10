@@ -1,0 +1,21 @@
+1. the three data files should be in the path of '.\data'
+
+2. adjust data according to 'modification4staging.txt'
+
+3. creating a database in PostgreSQL (in PGAdmin)
+create a new schema 'staging' in that database (in PGAdmin)(the schema public is for data warehouse)
+
+4. run '.\SQL code\createDataVault' first, then run '.\SQL code\createStaging'
+
+5. run 'main.py'
+Note that the connection info in the main function (stagingData(database='project', user='postgres', password='19980806', port='5432')) needs to be adapted.
+
+6. can test the staging area by running sentences in '.\SQL code\basicQueryStaging'
+
+7. run '.\SQL code\loadDataVault'
+
+8. can test the data warehouse by running sentences in '.\SQL code\basicQueryDataVault'
+
+9. loading finished. 
+For information mart, sql sentences in basicQueryDataVault can be referenced.
+If other applications are needed, do check the 'BK rule' to specify how to identify the bussiness keys of all entities before querying them.
