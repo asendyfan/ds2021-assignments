@@ -1,5 +1,3 @@
 .Ds_store
 *.pyc
-*.png
-*.jpg
 __pycache__
